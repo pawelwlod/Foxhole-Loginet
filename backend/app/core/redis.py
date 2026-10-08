@@ -29,4 +29,4 @@ class RedisClient:
     def get_redis(self) -> Redis:
         return self.client
     
-redis_client = RedisClient(
+redis_client = RedisClient()

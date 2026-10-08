@@ -2,9 +2,9 @@
 name = "LogiNet"
 version = "0.0.1"
 dynamic = ["version"]
-description = "Foxhole Logistics Dashboard"
+description = "Foxhole Loginet"
 authors = [
-  { name="Pawel W", email="pawelwlod@proton.me" },
+  { name="Pawel W" },
 ]
 readme = "README.md"
 license = "MIT"
@@ -29,6 +29,9 @@ pythonpath = ["app"]
 
 [tool.fastapi]
 entrypoint = "app.main:app"
+
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
