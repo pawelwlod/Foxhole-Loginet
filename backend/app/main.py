@@ -10,10 +10,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.redis import redis_client
 from app.core.logging import setup_logging
 from app.middleware import LoggingMiddleware, WebSocketLoggingMiddleware
-from app.api import router as api_router
+from app.routers import users
 
 setup_logging()
-startup_logger = logging.getLogger("startup")
+startup_logger = logging.getLogger()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -40,7 +40,7 @@ app.add_middleware(
 app.add_middleware(LoggingMiddleware)
 app.add_middleware(WebSocketLoggingMiddleware)
 
-app.include_router(api_router.router)
+app.include_router(users.router)
 
 @app.get("/health")
 async def health():
