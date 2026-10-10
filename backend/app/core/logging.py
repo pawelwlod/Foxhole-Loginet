@@ -61,11 +61,11 @@ LOGGING_CONFIG = {
         },
 
         # SQLAlchemy
-        "sqlalchemy.engine": {"level": "WARNING"} if not settings.debug else {"level": "DEBUG"},
-        "sqlalchemy.pool": {"level": "WARNING"} if not settings.debug else {"level": "DEBUG"},
+        "sqlalchemy.engine": {"level": "DEBUG"} if settings.debug else {"level": "WARNING"},
+        "sqlalchemy.pool": {"level": "DEBUG"} if settings.debug else {"level": "WARNING"},
 
         # Redis / aioredis
-        "redis": {"level": "WARNING"} if not settings.debug else {"level": "DEBUG"},
+        "redis": {"level": "DEBUG"} if settings.debug else {"level": "WARNING"},
     },
 }
 

@@ -12,11 +12,11 @@ class Settings(BaseSettings):
     '''Loginet Config'''
     
     # DB Settings
-    db_driver_name: str | None = None
-    db_username: str | None = None
-    db_password: str | None = None
-    db_host: str | None = None
-    db: str | None = None
+    db_driver_name: str | None = "postgresql+asyncpg"
+    db_username: str | None = "loginet"
+    db_password: str | None = "loginet"
+    db_host: str | None = "localhost"
+    db: str | None = "loginet"
 
     # Redis
     redis_url: str | None = "redis://localhost:6379"
@@ -26,8 +26,8 @@ class Settings(BaseSettings):
     discord_client_secret: str | None = None
     discord_redirect_uri: str | None  = None
 
-    env: str | None = None
-    debug: bool = False
+    env: str | None = "prod"
+    debug: bool | None = False
 
     class Config:
         env_file = ".env"
