@@ -12,22 +12,22 @@ class Settings(BaseSettings):
     '''Loginet Config'''
     
     # DB Settings
-    db_driver_name: str | None = "postgresql+asyncpg"
-    db_username: str | None = "loginet"
-    db_password: str | None = "loginet"
-    db_host: str | None = "localhost"
-    db: str | None = "loginet"
+    DB_DRIVER_NAME: str | None = "postgresql+asyncpg"
+    DB_USERNAME: str | None = "loginet"
+    DB_PASSWORD: str | None = "loginet"
+    DB_HOST: str | None = "localhost"
+    DB: str | None = "loginet"
 
     # Redis
-    redis_url: str | None = "redis://localhost:6379"
+    REDIS_URL: str | None = "redis://localhost:6379"
 
     # Discord OAuth
-    discord_client_id: str | None = None
-    discord_client_secret: str | None = None
-    discord_redirect_uri: str | None  = None
+    DISCORD_CLIENT_ID: str | None = None
+    DISCORD_CLIENT_SECRET: str | None = None
+    DISCORD_REDIRECT_URI: str | None  = None
 
-    env: str | None = "prod"
-    debug: bool | None = False
+    FASTAPI_ENV: str | None = "prod"
+    DEBUG: bool | None = False
 
     class Config:
         env_file = ".env"
@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     
     @property
     def db_url(self) -> str:
-        return f"{self.db_driver_name}://{self.db_username}:{self.db_password}@{self.db_host}/{self.db}"
+        return f"{self.DB_DRIVER_NAME}://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_HOST}/{self.DB}"
 
 
 @lru_cache()

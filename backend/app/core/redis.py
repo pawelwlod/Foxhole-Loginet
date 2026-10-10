@@ -14,7 +14,7 @@ class RedisClient:
 
     async def connect(self):
         self.pool = ConnectionPool.from_url(
-            settings.redis_url,
+            settings.REDIS_URL,
             max_connections=100,
             decode_responses=True
         )

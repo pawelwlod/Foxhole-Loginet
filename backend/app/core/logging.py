@@ -40,32 +40,32 @@ LOGGING_CONFIG = {
     "loggers": {
         "": {
             "handlers": ["console", "file"],
-            "level": "DEBUG" if settings.debug else "INFO",
+            "level": "DEBUG" if settings.DEBUG else "INFO",
         },
 
         # Uvicorn
         "uvicorn.error": {
             "handlers": ["console", "file"],
-            "level": "DEBUG" if settings.debug else "INFO",
+            "level": "DEBUG" if settings.DEBUG else "INFO",
             "propagate": False,
         },
         "uvicorn.access": {
             "handlers": ["console", "file"],
-            "level": "DEBUG" if settings.debug else "INFO",
+            "level": "DEBUG" if settings.DEBUG else "INFO",
             "propagate": False,
         },
         "uvicorn": {
             "handlers": ["console", "file"],
-            "level": "DEBUG" if settings.debug else "INFO",
+            "level": "DEBUG" if settings.DEBUG else "INFO",
             "propagate": False,
         },
 
         # SQLAlchemy
-        "sqlalchemy.engine": {"level": "DEBUG"} if settings.debug else {"level": "WARNING"},
-        "sqlalchemy.pool": {"level": "DEBUG"} if settings.debug else {"level": "WARNING"},
+        "sqlalchemy.engine": {"level": "DEBUG"} if settings.DEBUG else {"level": "WARNING"},
+        "sqlalchemy.pool": {"level": "DEBUG"} if settings.DEBUG else {"level": "WARNING"},
 
         # Redis / aioredis
-        "redis": {"level": "DEBUG"} if settings.debug else {"level": "WARNING"},
+        "redis": {"level": "DEBUG"} if settings.DEBUG else {"level": "WARNING"},
     },
 }
 
