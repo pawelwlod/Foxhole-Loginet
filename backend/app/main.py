@@ -4,9 +4,13 @@
 import asyncio
 import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+
+from sqlmodel import Session
+
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.database import get_session
 from app.core.redis import redis_client
 from app.core.logging import setup_logging
 from app.middleware import LoggingMiddleware, WebSocketLoggingMiddleware
@@ -43,5 +47,5 @@ app.add_middleware(WebSocketLoggingMiddleware)
 app.include_router(users.router)
 
 @app.get("/health")
-async def health():
+async def health(*, session: Session = Depends(get_session)):
     return {"status": "ok", "service": "Foxhole LogiNet"}
