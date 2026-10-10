@@ -19,7 +19,8 @@ class Settings(BaseSettings):
     DB: str | None = "loginet"
 
     # Redis
-    REDIS_URL: str | None = "redis://localhost:6379"
+    REDIS_HOST: str | None = "localhost"
+    REDIS_PORT: str | None = "6379"
 
     # Discord OAuth
     DISCORD_CLIENT_ID: str | None = None
@@ -38,6 +39,9 @@ class Settings(BaseSettings):
     def db_url(self) -> str:
         return f"{self.DB_DRIVER_NAME}://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_HOST}/{self.DB}"
 
+    @property
+    def redis_url(self) -> str:
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}"
 
 @lru_cache()
 def get_settings() -> Settings:

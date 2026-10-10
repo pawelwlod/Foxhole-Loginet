@@ -9,12 +9,12 @@ from app.config import settings
 
 class RedisClient:
     def __init__(self):
-        self.pool: ConnectionPool = None
-        self.client: Redis = None
+        self.pool: ConnectionPool | None = None
+        self.client: Redis | None = None
 
     async def connect(self):
         self.pool = ConnectionPool.from_url(
-            settings.REDIS_URL,
+            settings.redis_url,
             max_connections=100,
             decode_responses=True
         )
@@ -26,7 +26,10 @@ class RedisClient:
         if self.pool:
             await self.pool.disconnect()
 
-    def get_redis(self) -> Redis:
+    async def get_redis(self) -> Redis:
         return self.client
     
 redis_client = RedisClient()
+
+async def get_redis_client() -> Redis:
+    return await redis_client.get_redis()

@@ -6,12 +6,13 @@ import logging
 from contextlib import asynccontextmanager
 
 from sqlmodel import Session
+from redis.asyncio import Redis
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import get_session
-from app.core.redis import redis_client
+from app.core.redis import redis_client, get_redis_client
 from app.core.logging import setup_logging
 from app.middleware import LoggingMiddleware, WebSocketLoggingMiddleware
 from app.routers import users
@@ -23,7 +24,12 @@ startup_logger = logging.getLogger()
 async def lifespan(app: FastAPI):
     startup_logger.info("Starting LogiNet...")
     await redis_client.connect()
+
+    client = await redis_client.get_redis()
+    startup_logger.info(f"Redis: {await client.ping()}")
+
     yield
+
     startup_logger.info("Shutting down LogiNet...")
     await redis_client.close_redis()
 
@@ -36,7 +42,7 @@ app = FastAPI(
 
 app.add_middleware(                                     
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"], # TODO This is temporary while in dev.
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -47,5 +53,14 @@ app.add_middleware(WebSocketLoggingMiddleware)
 app.include_router(users.router)
 
 @app.get("/health")
-async def health(*, session: Session = Depends(get_session)):
+async def health(
+    *, 
+    session: Session = Depends(get_session), 
+    redis: Redis = Depends(get_redis_client)
+):
+    try:
+        await redis.ping()
+    except Exception as e:
+        return {"status": "unhealthy", "error": str(e)}, 503
+    
     return {"status": "ok", "service": "Foxhole LogiNet"}
